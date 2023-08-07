@@ -1,0 +1,34 @@
+let arr = [5,4,3]
+let n = arr.length - 1
+let sum = 0
+
+
+const subsetSums = (arr, index, n, sum) => {
+    
+    // base case
+    if (index > n) {
+        document.write("sum: ", sum)
+        return
+    }
+    
+    // includes
+    subsetSums(arr, index + 1, n, sum + arr[index])
+    
+    // excludes
+    subsetSums(arr, index + 1, n, sum)
+}
+
+subsetSums(arr, 0, n, sum)
+
+*/* output
+sum:  12
+sum:  9
+sum:  8
+sum:  5
+sum:  7
+sum:  4
+sum:  3
+sum:  0
+Time complexity : O(2^n)
+Auxiliary Space : O(n)
+*/*
