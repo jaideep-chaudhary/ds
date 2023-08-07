@@ -1,0 +1,32 @@
+let result = new Set()
+let subset = []
+let arr = [1,2,2]
+
+const findSubsets = (index) => {
+    
+    // if current subset is not empty then push the element to subset
+    if (subset.length > 0) {
+        result.add(subset.join(""))
+    }
+    
+    // iterate over every element
+    for (let j = index; j < arr.length; j++) {
+        
+        // pick the element and move ahead
+        subset.push(arr[j])
+        findSubsets(j+1)
+        
+        // backtrack to drop the element
+        subset.pop()
+    }
+}
+findSubsets(0)
+let res = Array.from(result);
+
+for(let i = 0; i < res.length; i++){
+    let temp = "";
+    for(let j = 0; j < res[i].length; j++){
+        temp = temp + res[i][j] + " ";
+    }
+    console.log(temp);
+}
