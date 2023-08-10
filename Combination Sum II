@@ -1,0 +1,30 @@
+let arr = [10,1,2,7,6,1,5]
+let result = []
+let target = 8
+
+arr.sort()
+
+const combination = (index, arr, target, temp) => {
+    
+    // backtracking case
+    
+    if (target < 0) return
+    
+    // base case
+    if (target == 0) {
+        result.push(temp.slice())
+    }
+    
+    // dfs case
+    
+    for (let j = index; j < arr.length; j++) {
+        if (index !== j && arr[j] === arr[j-1]) continue
+        temp.push(arr[j])
+        combination(j + 1, arr, target - arr[j], temp)
+        temp.pop()
+        
+    }
+}
+
+combination(0, arr, target, [])
+console.log(result)
