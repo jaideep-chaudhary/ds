@@ -1,0 +1,27 @@
+let arr = [1,2,3]
+let result = []
+
+const permutations = (i, arr) => {
+    // base case
+    
+    if (i === arr.length) {
+        result.push(arr.slice())
+        return
+    }
+    
+    // recursive case
+    
+    for(let j = i; j < arr.length; j++) {
+        [arr[i], arr[j]] = [arr[j], arr[i]]
+        permutations(i + 1, arr)
+        console.log(arr[i])
+        [arr[i], arr[j]] = [arr[j], arr[i]]
+    }
+}
+
+
+permutations(0, arr)
+console.log(result)
+
+// Time complexity: o(N! * N)
+// Space complexity: o(N! * N)
