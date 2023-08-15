@@ -63,3 +63,7 @@ const sudokuBoard = [
 ];
 
 console.log(solveSudoku(sudokuBoard));
+
+// Time Complexity: O(9(n ^ 2)), in the worst case, for each cell in the n2 board, we have 9 possible numbers.
+
+// Space Complexity: O(1) due to storage of the sodoku board
