@@ -1,0 +1,65 @@
+function solveSudoku(board) {
+  const N = 9; // Size of the Sudoku board
+
+  // Helper function to check if a number can be placed at a given cell
+  function isSafe(row, col, num) {
+    // Check row and column
+    for (let i = 0; i < N; i++) {
+      if (board[row][i] === num || board[i][col] === num) {
+        return false;
+      }
+    }
+    
+    // Check the 3x3 subgrid
+    const startRow = row - (row % 3);
+    const startCol = col - (col % 3);
+    for (let i = 0; i < 3; i++) {
+      for (let j = 0; j < 3; j++) {
+        if (board[startRow + i][startCol + j] === num) {
+          return false;
+        }
+      }
+    }
+    
+    return true;
+  }
+
+  // Main solver function
+  function solve() {
+    for (let row = 0; row < N; row++) {
+      for (let col = 0; col < N; col++) {
+        if (board[row][col] === 0) {
+          for (let num = 1; num <= N; num++) {
+            if (isSafe(row, col, num)) {
+              board[row][col] = num;
+              if (solve()) {
+                return true;
+              }
+              board[row][col] = 0; // Backtrack
+            }
+          }
+          return false; // No valid number found
+        }
+      }
+    }
+    return true; // Puzzle solved
+  }
+
+  solve(); // Start solving the Sudoku
+  return board;
+}
+
+// Example Sudoku board (0 represents empty cells)
+const sudokuBoard = [
+  [5, 3, 0, 0, 7, 0, 0, 0, 0],
+  [6, 0, 0, 1, 9, 5, 0, 0, 0],
+  [0, 9, 8, 0, 0, 0, 0, 6, 0],
+  [8, 0, 0, 0, 6, 0, 0, 0, 3],
+  [4, 0, 0, 8, 0, 3, 0, 0, 1],
+  [7, 0, 0, 0, 2, 0, 0, 0, 6],
+  [0, 6, 0, 0, 0, 0, 2, 8, 0],
+  [0, 0, 0, 4, 1, 9, 0, 0, 5],
+  [0, 0, 0, 0, 8, 0, 0, 7, 9]
+];
+
+console.log(solveSudoku(sudokuBoard));
