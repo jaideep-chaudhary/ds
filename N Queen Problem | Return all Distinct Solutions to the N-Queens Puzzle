@@ -1,0 +1,48 @@
+let n = 4
+let result = []
+
+const nQueens = (i, n, slate) => {
+ // backtracking case
+ let lastQ = i-1;
+ 
+ for (let prevQ = 0; prevQ < lastQ; prevQ++){
+     // col conflict
+     if(slate[prevQ] === slate[lastQ]) return;
+     
+     // diagonal conflict
+     let rowDiff = Math.abs(prevQ - lastQ)
+     let colDiff = Math.abs(slate[prevQ] - slate[lastQ])
+     
+     if (rowDiff === colDiff) return;
+ }
+ 
+ // base case
+ if (i === n) {
+     result.push(slate.slice())
+     return
+ }
+ 
+ // recursive case
+ for(let col = 0; col < n; col++) {
+     slate.push(col)
+     nQueens(i + 1, n, slate)
+     slate.pop()
+ }
+}
+
+const formatBoard = (board) => {
+    let chess = []
+    for (let col = 0; col < board.length; col++) {
+        let newRow = new Array(board.length).fill(".")
+        newRow[board[col]] = "Q"
+        chess.push(newRow.join(""))
+    }
+    return chess
+}
+
+
+nQueens(0, n, [])
+console.log(result.map(board => formatBoard(board)))
+
+// Time Complexity: Exponential in nature since we are trying out all ways, to be precise it is O(N! * N).
+// Space Complexity: O(N)
