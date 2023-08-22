@@ -1,0 +1,82 @@
+let maze = [[1,0,0,0],
+[1,1,0,1],
+[0,1,0,0],
+[1,1,1,1]]
+ let N = maze.length
+ 
+ console.log(N)
+ 
+ const isSafe = (maze,x,y) => {
+     // if (x, y outside maze) return false
+     return (x >= 0 && x < N && y >= 0 && y < N && maze[x][y] == 1)
+     
+ }
+
+const solveProblem = (maze,x,y,sol) => {
+    // if (x, y is goal) return true
+    if (x == N-1 && y == N-1 && maze[x][y] == 1) {
+        sol[x][y] = 1
+        return true
+    }
+    
+    // Check if maze[x][y] is valid
+    if (isSafe(maze,x,y) === true) {
+        
+        // check if the current block is part of solution
+        if (sol[x][y] == 1) {
+            return false;
+        }
+        
+        // mark x,y part of solution
+        sol[x][y] = 1
+        
+        // move in x direction 
+        if (solveProblem(maze, x +1, y, sol)) {
+            return true
+        }
+        
+        // if moving in x direction doesn't give solution then move to y direction
+        if (solveProblem(maze, x, y+1, sol)) {
+            return true
+        }
+        
+        // if moving in y direction doesn't give solution then move backward to x direction 
+        if (solveProblem(maze, x - 1, y, sol)) {
+            return true
+        }
+        
+        // if moving in x-1 direction doesn't give solution then move backward to y direction  
+        if (solveProblem(maze, x, y-1, sol)) {
+            return true
+        }
+        
+        // if none of the condition matches then backtrack
+        sol[x][y] = 0
+        return false
+    }
+}
+ 
+ const solveMaze = (maze) => {
+     let sol = new Array(N);
+     for (let i = 0; i <N; i++) {
+         sol[i] = new Array(N);
+         for (let j=0; j < N; j++) {
+             sol[i][j] = 0
+         }
+     }
+     
+     if (solveProblem(maze,0,0,sol) === false) {
+         console.log("== Solution does not exist")
+         return false
+     }
+     
+     console.log("== sol ===", sol)
+     return true
+     
+     
+ }
+ 
+  solveMaze(maze)
+// time complexity => 4 ki power (m*n)
+// space => o(m*n)
+
