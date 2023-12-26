@@ -1,0 +1,35 @@
+const arrivalTime = [900, 940, 950, 1100, 1500, 1800];
+const departureTime = [910, 1200, 1120, 1130, 1900, 2000];
+const n = arrivalTime.length
+
+const findPlatform = (arr, dep, n) => {
+    
+    // store arrival & departue Time in array
+    const arr2 = new Array(n)
+    for(i=0; i<n; i++) {
+        arr2[i] = {arr: arr[i], dep: dep[i]}
+    }
+    
+    //sort array based on arrival time
+    arr2.sort((a, b) => a.arr - b.arr)
+    
+    // create a priority queue to store values of platform
+    const p = []
+    let count = 1
+    p.push(arr2[0].dep)
+    
+    for(i=1; i <n; i++) {
+        // Check if the next train can use an existing platform
+        if(p[0] <= arr2[i].arr) {
+            p.shift() //
+        } else {
+            count++
+        }
+        p.push(arr2[i].dep)
+       
+    }
+    console.log(count) // return no of platform
+    
+}
+
+findPlatform(arrivalTime, departureTime, n)
