@@ -1,0 +1,35 @@
+class Item {
+    constructor(profit, weight){
+        this.profit = profit;
+        this.weight = weight;
+    }
+}
+
+let w = 50;
+let arr = [new Item(60, 10), new Item(100, 20), new Item(120, 30)]
+
+const sortValueWeightRatio = (a, b) => {
+    let item1 = a.profit/a.weight;
+    let item2 = b.profit/b.weight;
+    return item1 > item2
+}
+
+const fractionalKnapsnack = (w, arr) => {
+    // sort based on ratio
+    arr.sort(sortValueWeightRatio);
+    let finalValue = 0.0;
+    for (let i =0; i<arr.length; i++) {
+        if(arr[i].weight <= w) {
+            w -= arr[i].weight;
+            finalValue += arr[i].profit;
+        } else {
+            finalValue += arr[i].profit * (w/arr[i].weight)
+            break;
+        }
+    }
+    console.log(finalValue)
+}
+fractionalKnapsnack(w, arr)
+
+// Time complexity: O(N *logN)
+// Auxiliary space: O(N)
